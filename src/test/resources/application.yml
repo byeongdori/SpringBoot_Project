@@ -1,0 +1,20 @@
+# 스프링은 별도 설정 없어도 메모리 상에서 돌아가게 변경!
+spring:
+#  datasource:
+#    # 메모리 상에서 돌아가게 url 변경!
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        # show_sql: true
+#        format_sql: true
+
+  logging.level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
