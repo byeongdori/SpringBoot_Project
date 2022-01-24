@@ -27,6 +27,8 @@ public class ItemController {
 
     @PostMapping("/items/new")
     public String create(BookForm form) {
+
+        // merge 방식, null이 들어갈 위험성이 높음!
         Book book = new Book();
         book.setName(form.getName());
         book.setPrice(form.getPrice());
@@ -40,7 +42,7 @@ public class ItemController {
 
     @GetMapping("/items")
     public String list(Model model) {
-        List<Item> items = itemService.findItem();
+        List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
         return "items/itemList";
     }
@@ -61,18 +63,27 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+//    @PostMapping(value = "/items/{itemId}/edit")
+//    public String updateItem(@ModelAttribute("form") BookForm form) {
+//        Book book = new Book();
+//
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//
+//        itemService.saveItem(book);
+//        return "redirect:/items";
+//    }
+
+    /**
+     * 상품 수정, 권장 코드
+     */
     @PostMapping(value = "/items/{itemId}/edit")
     public String updateItem(@ModelAttribute("form") BookForm form) {
-        Book book = new Book();
-
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);
+        itemService.updateItem(form.getId(), form.getName(), form.getPrice());
         return "redirect:/items";
     }
 }
